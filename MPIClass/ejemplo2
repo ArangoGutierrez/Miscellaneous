@@ -18,10 +18,13 @@ int main(int argc, char **argv) {
                 
                 MPI_Recv(msg, 20, MPI_CHAR, 1, tag, MPI_COMM_WORLD, &status);
                 printf("msg Send from Node %d",my_rank);
+                
+MPI_Sendrecv (msg,20,MPI_CHAR,1,tag,msg,20,MPI_CHAR,tag,MPI_COMM_WORLD,&status) 
+                
         } else if (my_rank == 1) {
 
         MPI_Recv(msg, 20, MPI_CHAR, 0, tag, MPI_COMM_WORLD, &status);
-        printf("The message %s was Recv by the Node %d",msg,my_rank);
+        printf("The message %s was Recv by the Node %d",msg,my_rank);// Coment this line to block the execution of the code "Mortal hug"
         
        for(char *p = msg;*p;++p) *p=*p>0x40&&*p<0x5b?*p|0x60:*p;
         
