@@ -14,7 +14,7 @@
    if (rank == 0) {
      dest = 1;
      source = 1;
-   	MPI_Sendrecv (&outmsg,1,MPI_CHAR,dest,tag,&inmsg,recvcount,MPI_CHAR,source,tag, MPI_COMM_WORLD,&Stat); 
+   	MPI_Sendrecv (&outmsg,1,MPI_CHAR,dest,tag,&inmsg,1,MPI_CHAR,source,tag, MPI_COMM_WORLD,&Stat); 
 
      } 
 
@@ -22,7 +22,7 @@
    else if (rank == 1) {
      dest = 0;
      source = 0;
-       	MPI_Sendrecv (&outmsg,1,MPI_CHAR,dest,tag,&inmsg,recvcount,MPI_CHAR,source,tag, MPI_COMM_WORLD,&Stat); 
+       	MPI_Sendrecv (&outmsg,1,MPI_CHAR,dest,tag,&inmsg,1,MPI_CHAR,source,tag, MPI_COMM_WORLD,&Stat); 
      }
 
    // query recieve Stat variable and print message details
