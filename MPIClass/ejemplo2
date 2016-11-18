@@ -19,8 +19,9 @@ int main(int argc, char **argv) {
                 MPI_Recv(msg, 20, MPI_CHAR, 1, tag, MPI_COMM_WORLD, &status);
                 printf("msg Send from Node %d",my_rank);
                 
-MPI_Sendrecv (msg,20,MPI_CHAR,1,tag,msg,20,MPI_CHAR,tag,MPI_COMM_WORLD,&status) 
-                
+        // MPI_Sendrecv (msg,20,MPI_CHAR,1,tag,msg,20,MPI_CHAR,tag,MPI_COMM_WORLD,&status) 
+         //Uncoment this line and coment line 17 and 19.
+         
         } else if (my_rank == 1) {
 
         MPI_Recv(msg, 20, MPI_CHAR, 0, tag, MPI_COMM_WORLD, &status);
