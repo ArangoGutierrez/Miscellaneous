@@ -39,15 +39,16 @@ MPI_Status status;
 
 /* Obtain number of tasks and task ID */
 /* Insertar la funcion de inicializacion del ambiente MPI */
-
+MPI_Init(&argc, &argv);
 
 /* Insertar la funcion que determina el numero de tareas en el comunicador */
 /* MPI_COMM_WORLD. Guardar el valor en numtasks */
+MPI_Comm_size(MPI_COMM_WORLD, &numtasks);
 
 
 /* Insertar la funcion que determina el rango del proceso. Guardar el valor en */
-/* la variable numtasks */
-
+/* la variable taskid */
+MPI_Comm_rank(MPI_COMM_WORLD,&taskid);
 printf ("MPI task %d has started...\n", taskid);
 
 /* Set seed for random number generator equal to task ID */
@@ -66,13 +67,14 @@ for (i = 0; i < ROUNDS; i++) {
       /* enviar el valor en la variable homepi al proceso MASTER y cuyo tag esta */
       /* dado en la variable mtype. El valor de retorno de la funcion de envio  */
       /* de datos se guarda en la variable rc */ 
-     
+     rc = MPI_Send(&homepi, 1, MPI_DOUBLE, MASTER, mtype,
+             MPI_COMM_WORLD);
       if (rc != MPI_SUCCESS)
          printf("%d: Send failure on round %d\n", taskid, mtype);
       } 
    else
       {
-/* Master receives messages from all workers */
+      /* Master receives messages from all workers */
       /* - Message type will be set to the iteration count */
       /* - Message source will be set to the wildcard DONTCARE: */
       /*   a message can be received from any task, as long as the */
@@ -88,7 +90,8 @@ for (i = 0; i < ROUNDS; i++) {
       /* cualquier otro proceso, MPI_ANY_SOURCE. El tag esta dado en la variable */ 
       /* mtype. El valor de retorno de la funcion de recepcion de datos se guarda */ 
       /* en la variable rc */ 
-
+      rc = MPI_Recv(&pirecv, 1, MPI_DOUBLE, MPI_ANY_SOURCE, mtype,
+             MPI_COMM_WORLD, &status);
 
          if (rc != MPI_SUCCESS) 
             printf("%d: Receive failure on round %d\n", taskid, mtype);
@@ -135,7 +138,6 @@ return 0;
 *   y_sqr       = square of y coordinate
 *   pi          = computed value of pi
 ****************************************************************************/
-
 double dboard(int darts)
 {
 #define sqr(x)	((x)*(x))
