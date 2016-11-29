@@ -22,7 +22,8 @@ dnf group install 'Development Tools'
 dnf -y update
 
 # dev-env
-dnf -y install \ htop git wget gcc gfortran openblas
+dnf -y install \ htop git wget gcc gfortran openblas cmake gcc-c++ 
+\libcurl libcurl-devel libstdc++ libstdc++-devel boost boost-devel
 dnf -y update
 
 echo "Now you can install Fenics on your Fedora"
