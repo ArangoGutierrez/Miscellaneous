@@ -10,7 +10,7 @@
 
 #!/bin/bash
 
-echo "Fedora"
+echo "Fedora base-dev set up for a WorkStation"
 
 # Update Vi
 dnf install vim
@@ -48,3 +48,8 @@ dnf update
 # dev-env
 dnf -y install \ git wget gcc gfortran openblas vtk-devel unzip
 dnf update
+
+echo "You now have a working Fedora WorkStation!!"
+echo "Congrats!!"
+echo "How do you fedora?"
+echo "Visit https://fedoramagazine.org/"
