@@ -13,7 +13,7 @@
 echo "Fedora base-dev set up for a WorkStation"
 
 # Update Vi
-dnf install vim
+dnf -y install vim
 
 # Activate RPMFusion Repository is you come from a fresh install ( Uncomment) 
 # rpm -ivh http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-24.noarch.rpm
@@ -35,19 +35,19 @@ dnf install vim
 #dnf install google-chrome-stable
 
 #Instal visual toolkits 
-dnf install \ vlc gimp vtk
+dnf -y install \ vlc gimp vtk
 
 # Add Java support
-dnf install java-openjdk icedtea-web
+dnf -y install java-openjdk icedtea-web
 
 # gnu-env-base
 dnf group install 'Development Tools'
-dnf update
+dnf -y update
 
 
 # dev-env
 dnf -y install \ htop git wget gcc gfortran openblas vtk-devel unzip
-dnf update
+dnf -y update
 
 echo "You now have a working Fedora WorkStation!!"
 echo "Congrats!!"
