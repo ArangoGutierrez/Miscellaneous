@@ -46,7 +46,7 @@ dnf update
 
 
 # dev-env
-dnf -y install \ git wget gcc gfortran openblas vtk-devel unzip
+dnf -y install \ htop git wget gcc gfortran openblas vtk-devel unzip
 dnf update
 
 echo "You now have a working Fedora WorkStation!!"
