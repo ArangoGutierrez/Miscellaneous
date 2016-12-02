@@ -1,0 +1,11 @@
+Executable  	= ./cont
+Requirements = UidDomain == "cloud.univalle.edu.co" 
+transfer_input_files= sinr,cosr
+arguments= sinr cosr
+Universe    	= vanilla
+Output      	= identidad
+Error       	= err.$(cluster)
+Log         	= log.$(cluster)
+should_transfer_files = YES
+when_to_transfer_output = ON_EXIT
+Queue
