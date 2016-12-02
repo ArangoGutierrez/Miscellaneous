@@ -1,0 +1,10 @@
+Executable  	= ./sin2
+Requirements = UidDomain == "cloud.univalle.edu.co" 
+arguments= 3.14
+Universe    	= vanilla
+Output      	= sinr
+Error       	= err.$(cluster)
+Log         	= log.$(cluster)
+should_transfer_files = YES
+when_to_transfer_output = ON_EXIT
+Queue
