@@ -1,0 +1,4 @@
+Job sine sen.submit
+Job cosine cos.submit
+Job collect identidad.submit
+PARENT sine cosine CHILD collect
