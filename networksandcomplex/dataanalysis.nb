@@ -1,0 +1,80 @@
+Arguments
+e1 = 24;(*Cali*)
+e2 = ScriptArgument
+Importing and creating the data sets
+Data loading
+SetDirectory[NotebookDirectory[]];
+estaciones = {{18, "Viterbo", {2, 4, 8, 10, 11}}, {20, 
+    "La Virginia", {1, 3, 7, 9, 10}}, {22, 
+    "Cartago", {1, 3, 7, 9, 10}}, {24, 
+    "Distrito RUT", {1, 3, 7, 9, 10}}, {26, 
+    "Zarzal", {1, 3, 7, 9, 10}}, {28, 
+    "La Paila", {1, 3, 7, 9, 10}}, {30, 
+    "Bugalagrande", {1, 3, 7, 9, 10}}, {32, 
+    "Riofrio", {1, 3, 7, 9, 10}}, {34, 
+    "Tulua", {1, 3, 7, 9, 10}}, {36, "Buga", {1, 3, 7, 9, 10}}, {38, 
+    "Yotoco", {1, 3, 7, 9, 10}},
+   {40, "Guacari", {2, 4, 8, 10, 11}}, {42, 
+    "Ginebra", {1, 3, 7, 9, 10}}, {44, 
+    "Amaime", {1, 3, 7, 9, 10}}, {46, 
+    "San Marcos", {1, 3, 7, 9, 10}}, {48, 
+    "Rozo", {1, 3, 7, 9, 10}}, {50, 
+    "Palmira La Rita", {1, 3, 7, 9, 10}}, {52, 
+    "Arroyohondo", {1, 3, 7, 9, 10}}, {54, 
+    "Aeropuerto", {1, 3, 7, 9, 10}}, {56, 
+    "Palmira San Jose", {1, 3, 7, 9, 10}}, {58, 
+    "PTAR Cali", {2, 4, 8, 10, 11}}, {60, 
+    "Candelaria", {1, 3, 7, 9, 10}}, {62, 
+    "Pradera", {1, 3, 7, 9, 10}}, {64, 
+    "Melendez", {1, 3, 7, 9, 10}}, {66, 
+    "El Tiple", {1, 3, 7, 9, 10}}, {68, 
+    "Cenicana", {1, 3, 7, 9, 10}}, {70, 
+    "Jamundi", {2, 4, 8, 10, 11}}, {72, 
+    "Bocas del Palo", {1, 3, 7, 9, 10}}, {74, 
+    "Ortigal", {1, 3, 7, 9, 10}}, {76, 
+    "Miranda", {1, 3, 7, 9, 10}}, {78, 
+    "El Naranjo", {1, 3, 7, 9, 10}}, {80, 
+    "Guachinte", {1, 3, 7, 9, 10}}, {82, 
+    "Corinto", {1, 3, 7, 9, 10}}, {84, 
+    "Santander de Quilichao", {1, 3, 7, 9, 10}}};
+nombreestacion[n_] := Extract[estaciones, {n, 2}];
+est[e_] := 
+  Table[Prepend[
+    Prepend[Prepend[
+      Import[ToString[i] <> "-" <> 
+        If[j < 10, "0" <> ToString[j], ToString[j]] <> "-" <> 
+        If[k < 10, "0" <> ToString[k], ToString[k]] <> 
+        ".csv", {"Data", Extract[estaciones, {e, 1}], 
+        Extract[estaciones, {e, 3}]}], k], j], i], {i, 2009, 
+    2013}, {j, 01, 12}, {k, 01, 30}];
+Data Mining
+baddata[entry_] := 
+ Not[MatchQ[
+   entry, {_?NumberQ, _?NumberQ, _?NumberQ, _?StringQ, _?NumberQ | 
+     "", _?NumberQ | "", _?NumberQ | "", _?NumberQ | ""}]]
+cleandata[e_] := 
+ Table[DeleteCases[Extract[est[e], {i, j}], _?baddata], {i, 1, 
+   10}, {j, 1, 12}]
+estacion1 = cleandata[24];
+estacion2 = cleandata[19];
+nodt[entry_] := Not[MatchQ[entry, {_?NumberQ, _?NumberQ}]];
+temp = DeleteCases[
+  Flatten[Table[{Extract[estacion1, {i, j, k, 8}], 
+     Extract[estacion2, {i, j, k, 5}]}, {i, 1, 10}, {j, 1, 10}, {k, 1,
+      10}], 2], _?nodt]
+r2temp = NonlinearRegress[temp, a + b x + c x^2, {a, b, c}, x];
+hum = DeleteCases[
+  Flatten[Table[{Extract[estacion1, {i, j, k, 8}], 
+     Extract[estacion2, {i, j, k, 6}]}, {i, 1, 10}, {j, 1, 10}, {k, 1,
+      10}], 2], _?nodt]
+r2hum = NonlinearRegress[hum, a + b x + c x^2, {a, b, c}, x];
+rad = DeleteCases[
+  Flatten[Table[{Extract[estacion1, {i, j, k, 8}], 
+     Extract[estacion2, {i, j, k, 7}]}, {i, 1, 10}, {j, 1, 10}, {k, 1,
+      10}], 2], _?nodt]
+r2rad = NonlinearRegress[rad, a + b x + c x^2, {a, b, c}, x];
+preci = DeleteCases[
+  Flatten[Table[{Extract[estacion1, {i, j, k, 8}], 
+     Extract[estacion2, {i, j, k, 8}]}, {i, 1, 10}, {j, 1, 10}, {k, 1,
+      10}], 2], _?nodt]
+r2preci = NonlinearRegress[preci, a + b x + c x^2, {a, b, c}, x];
