@@ -1,0 +1,12 @@
+universe                = docker
+docker_image            = docker.io/gcc:latest 
+executable              = ./mcbD
+transfer_input_files =  mcbD
+arguments               = 500 12 $(Process)
+should_transfer_files   = YES
+when_to_transfer_output = ON_EXIT
+output                  = D.$(Process).out
+#error                   = D.$(Process).$(Cluster).err
+#log                     = D.$(Process).$(Cluster).log
+#request_memory          = 10M
+queue 100
